@@ -4,6 +4,7 @@ class Chronomètre:
     def __init__(self, root):
         self.root = root
         self.root.title("Chronomètre")
+        self.tool = "Chronomètre"
 
         # Variables
         self.running = False
@@ -12,8 +13,9 @@ class Chronomètre:
         # Interface graphique
 
         # Affichage du temps
-        self.label_temps = tk.Label(root, text="00:00:00", font=("Arial", 40))
-        self.label_temps.pack(pady=20)
+        if self.tool == "Chronomètre":
+            self.label_temps = tk.Label(root, text="00:00:00", font=("Arial", 40))
+            self.label_temps.pack(pady=20)
 
         # Bouton Démarrer
         self.start_button = tk.Button(root, text="Démarrer", command=self.start, width=15)
@@ -26,6 +28,14 @@ class Chronomètre:
         # Bouton Reset
         self.reset_button = tk.Button(root, text="Remettre à zéro", command=self.reset, width=15)
         self.reset_button.pack(pady=5)
+
+        # Bouton Switch Minuteur
+        self.switch_to_minuteur_button = tk.Button(root, text="Aller vers le Minuteur", command=self.switch_to_minuteur, width=15)
+        self.switch_to_minuteur_button.pack(pady=5)
+
+        # Bouton Switch Chronomètre
+        self.switch_to_chronomètre_button = tk.Button(root, text="Aller vers le Chronomètre", command=self.switch_to_chronomètre, width=15)
+        self.switch_to_chronomètre_button.pack(pady=5)
 
     # Pour toujours afficher les heures:minutes:secondes
     def format_time(self, seconds):
@@ -42,6 +52,16 @@ class Chronomètre:
             # Après toutes les 1000 millisecondes (secondes), on relance la même fonction 
             self.root.after(1000, self.update_temps)
     
+    def switch_to_minuteur(self):
+        self.running = False
+        self.temps_écoulé = 0
+        self.label_temps.config(text="00:00:00")
+
+    def switch_to_chronomètre(self):
+        self.running = False
+        self.temps_écoulé = 0
+        self.label_temps.config(text="00:00:00")
+
     def start(self):
         if not self.running:
             self.running = True

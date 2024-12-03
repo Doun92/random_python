@@ -35,7 +35,6 @@ class Chronomètre:
 
         # Bouton Switch Chronomètre
         self.switch_to_chronomètre_button = tk.Button(root, text="Aller vers le Chronomètre", command=self.switch_to_chronomètre, width=15)
-        self.switch_to_chronomètre_button.pack(pady=5)
 
     # Pour toujours afficher les heures:minutes:secondes
     def format_time(self, seconds):
@@ -56,11 +55,21 @@ class Chronomètre:
         self.running = False
         self.temps_écoulé = 0
         self.label_temps.config(text="00:00:00")
+        self.start_button.pack_forget()
+        self.stop_button.pack_forget()
+        self.reset_button.pack_forget()
+        self.switch_to_minuteur_button.pack_forget()
+        self.switch_to_chronomètre_button.pack(pady=5)
 
     def switch_to_chronomètre(self):
         self.running = False
         self.temps_écoulé = 0
         self.label_temps.config(text="00:00:00")
+        self.start_button.pack(pady=5)
+        self.stop_button.pack(pady=5)
+        self.reset_button.pack(pady=5)
+        self.switch_to_minuteur_button.pack(pady=5)
+        self.switch_to_chronomètre_button.pack_forget()
 
     def start(self):
         if not self.running:

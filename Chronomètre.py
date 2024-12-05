@@ -15,26 +15,56 @@ class Chronomètre:
         # Affichage du temps
         if self.tool == "Chronomètre":
             self.label_temps = tk.Label(root, text="00:00:00", font=("Arial", 40))
-            self.label_temps.pack(pady=20)
+            self.label_temps.grid(
+                row=0,
+                column=0,
+                columnspan=3,
+                pady=20
+            )
 
         # Bouton Démarrer
-        self.start_button = tk.Button(root, text="Démarrer", command=self.start, width=15)
-        self.start_button.pack(pady=5)
+        self.start_button = tk.Button(root, text="Démarrer", command=self.start, width=25)
+        self.start_button.grid(
+            row=1,
+            column=1,
+            pady=5
+        )
 
         # Bouton Arrêter
-        self.stop_button = tk.Button(root, text="Arrêter", command=self.stop, width=15)
-        self.stop_button.pack(pady=5)
+        self.stop_button = tk.Button(root, text="Arrêter", command=self.stop, width=25)
+        self.stop_button.grid(
+            row=2,
+            column=1,
+            pady=5
+        )
+
 
         # Bouton Reset
-        self.reset_button = tk.Button(root, text="Remettre à zéro", command=self.reset, width=15)
-        self.reset_button.pack(pady=5)
+        self.reset_button = tk.Button(root, text="Remettre à zéro", command=self.reset, width=25)
+        self.reset_button.grid(
+            row=3,
+            column=1,
+            pady=5
+        )
 
         # Bouton Switch Minuteur
-        self.switch_to_minuteur_button = tk.Button(root, text="Aller vers le Minuteur", command=self.switch_to_minuteur, width=15)
-        self.switch_to_minuteur_button.pack(pady=5)
+        self.switch_to_minuteur_button = tk.Button(root, text="Aller vers le Minuteur", command=self.switch_to_minuteur, width=25)
+        self.switch_to_minuteur_button.grid(
+            row=4,
+            column=1,
+            pady=5
+        )
 
         # Bouton Switch Chronomètre
-        self.switch_to_chronomètre_button = tk.Button(root, text="Aller vers le Chronomètre", command=self.switch_to_chronomètre, width=15)
+        self.switch_to_chronomètre_button = tk.Button(root, text="Aller vers le Chronomètre", command=self.switch_to_chronomètre, width=25)
+
+        # Bouton Fermer l'application
+        self.close_app_button = tk.Button(root, text="Fermer l'application", command=self.close_app, width=25)
+        self.close_app_button.grid(
+            row=5,
+            column=1,
+            pady=5
+        )
 
     # Pour toujours afficher les heures:minutes:secondes
     def format_time(self, seconds):
@@ -55,21 +85,53 @@ class Chronomètre:
         self.running = False
         self.temps_écoulé = 0
         self.label_temps.config(text="00:00:00")
-        self.start_button.pack_forget()
-        self.stop_button.pack_forget()
-        self.reset_button.pack_forget()
-        self.switch_to_minuteur_button.pack_forget()
-        self.switch_to_chronomètre_button.pack(pady=5)
+        self.start_button.grid_forget()
+        self.stop_button.grid_forget()
+        self.reset_button.grid_forget()
+        self.switch_to_minuteur_button.grid_forget()
+        self.close_app_button.grid_forget()
+        self.switch_to_chronomètre_button.grid(
+            row=1,
+            column=1,
+            pady=5
+        )
+        self.close_app_button.grid(
+            row=2,
+            column=1,
+            pady=5
+        )
 
     def switch_to_chronomètre(self):
         self.running = False
         self.temps_écoulé = 0
         self.label_temps.config(text="00:00:00")
-        self.start_button.pack(pady=5)
-        self.stop_button.pack(pady=5)
-        self.reset_button.pack(pady=5)
-        self.switch_to_minuteur_button.pack(pady=5)
-        self.switch_to_chronomètre_button.pack_forget()
+        self.close_app_button.grid_forget()
+        self.start_button.grid(
+            row=1,
+            column=1,
+            pady=5
+        )
+        self.stop_button.grid(
+            row=2,
+            column=1,
+            pady=5
+        )
+        self.reset_button.grid(
+            row=3,
+            column=1,
+            pady=5
+        )
+        self.switch_to_minuteur_button.grid(
+            row=4,
+            column=1,
+            pady=5
+        )
+        self.switch_to_chronomètre_button.grid_forget()
+        self.close_app_button.grid(
+            row=5,
+            column=1,
+            pady=5
+        )
 
     def start(self):
         if not self.running:
@@ -83,6 +145,9 @@ class Chronomètre:
         self.running = False
         self.temps_écoulé = 0
         self.label_temps.config(text="00:00:00")
+
+    def close_app(self):
+        root.quit()
 
 # Lancement de l'application
 if __name__ == "__main__":

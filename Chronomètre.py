@@ -55,6 +55,16 @@ class Chronomètre:
             pady=5
         )
 
+        # Écran minuteur
+        self.zéros = tk.StringVar()
+        self.zéros.set("00")
+        self.écran_minuteur = tk.Frame(root)
+        # Heures
+        self.label_heures = tk.Label(self.écran_minuteur, text="Heures")
+        self.heures=tk.Entry(self.écran_minuteur,width=5, justify=tk.CENTER, textvariable = self.zéros)
+        # Écran minutes
+        # Écran secondes
+
         # Bouton Switch Chronomètre
         self.switch_to_chronomètre_button = tk.Button(root, text="Aller vers le Chronomètre", command=self.switch_to_chronomètre, width=25)
 
@@ -90,6 +100,21 @@ class Chronomètre:
         self.reset_button.grid_forget()
         self.switch_to_minuteur_button.grid_forget()
         self.close_app_button.grid_forget()
+        self.label_temps.grid_forget()
+        self.écran_minuteur.grid(
+            row=0,
+            column=0,
+            columnspan=3,
+            pady=20
+        )
+        self.label_heures.grid(
+            row=0,
+            column=0
+        )
+        self.heures.grid(
+            row=1,
+            column=0
+        )
         self.switch_to_chronomètre_button.grid(
             row=1,
             column=1,
@@ -106,6 +131,13 @@ class Chronomètre:
         self.temps_écoulé = 0
         self.label_temps.config(text="00:00:00")
         self.close_app_button.grid_forget()
+        self.écran_minuteur.grid_forget()
+        self.label_temps.grid(
+                row=0,
+                column=0,
+                columnspan=3,
+                pady=20
+            )
         self.start_button.grid(
             row=1,
             column=1,

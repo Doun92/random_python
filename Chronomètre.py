@@ -34,8 +34,8 @@ class Chronomètre:
         self.start_button_minuteur = tk.Button(root, text="Démarrer", command=self.start_minuteur)
 
         # Bouton Arrêter le Chronomètre
-        self.stop_button_chronomètre = tk.Button(root, text="Arrêter", command=self.stop_chronomètre, width=25)
-        self.stop_button_chronomètre.grid(
+        self.stop_button_temps = tk.Button(root, text="Arrêter", command=self.stop_temps, width=25)
+        self.stop_button_temps.grid(
             row=2,
             column=1,
             pady=5
@@ -136,7 +136,6 @@ class Chronomètre:
         self.temps_écoulé = 0
         self.label_temps.config(text="00:00:00")
         self.start_button_chronomètre.grid_forget()
-        self.stop_button_chronomètre.grid_forget()
         self.reset_button_chronomètre.grid_forget()
         self.switch_to_minuteur_button.grid_forget()
         self.close_app_button.grid_forget()
@@ -177,14 +176,18 @@ class Chronomètre:
             column=1,
             pady=5
         )
-
-        self.switch_to_chronomètre_button.grid(
+        self.stop_button_temps.grid(
             row=2,
             column=1,
             pady=5
         )
-        self.close_app_button.grid(
+        self.switch_to_chronomètre_button.grid(
             row=3,
+            column=1,
+            pady=5
+        )
+        self.close_app_button.grid(
+            row=4,
             column=1,
             pady=5
         )
@@ -203,7 +206,9 @@ class Chronomètre:
             total_seconds = heures * 3600 + minutes * 60 + secondes
 
             # Lancer le décompte
-            self.décompte(total_seconds)
+            if not self.running:
+                self.running = True
+                self.décompte(total_seconds)
         except ValueError:
             # Si une valeur est invalide
             print("Les champs doivent contenir uniquement des nombres valides.")
@@ -212,10 +217,10 @@ class Chronomètre:
         """
         Décompte les secondes et met à jour les champs.
         """
-        if total_seconds > 0:
+        if total_seconds > 0 and self.running:
                 # Calculer les heures, minutes, secondes restantes
-                heures, remainder = divmod(total_seconds, 3600)
-                minutes, secondes = divmod(remainder, 60)
+                heures, reste = divmod(total_seconds, 3600)
+                minutes, secondes = divmod(reste, 60)
 
                 # Mettre à jour les champs
                 self.heure_nb.set(f"{heures:02}")
@@ -224,7 +229,8 @@ class Chronomètre:
 
                 # Appeler à nouveau la fonction après 1 seconde
                 self.écran_minuteur.after(1000, self.décompte, total_seconds - 1)
-        else:
+        elif total_seconds == 0 and self.running:
+            self.running = False
             # Quand le décompte est terminé
             self.heure_nb.set("00")
             self.minute_nb.set("00")
@@ -252,7 +258,7 @@ class Chronomètre:
             column=1,
             pady=5
         )
-        self.stop_button_chronomètre.grid(
+        self.stop_button_temps.grid(
             row=2,
             column=1,
             pady=5
@@ -279,9 +285,6 @@ class Chronomètre:
             self.running = True
             self.update_temps()
 
-    def stop_chronomètre(self):
-        self.running = False
-
     def reset_chronomètre(self):
         self.running = False
         self.temps_écoulé = 0
@@ -304,7 +307,12 @@ class Chronomètre:
             self.label_temps.config(text=temps_affiché)
             # Après toutes les 1000 millisecondes (secondes), on relance la même fonction 
             self.root.after(1000, self.update_temps)
-    
+
+    """
+    Fonctions pour les deux
+    """
+    def stop_temps(self):
+        self.running = False
 
 # Lancement de l'application
 if __name__ == "__main__":

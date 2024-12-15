@@ -22,6 +22,8 @@ class Chronomètre:
                 pady=20
             )
 
+        self.label_minuteur_en_cours = tk.Label(root, text="", font=("Arial", 40))
+
         # Bouton Démarrer le Chronomètre
         self.start_button_chronomètre = tk.Button(root, text="Démarrer", command=self.start_chronomètre, width=25)
         self.start_button_chronomètre.grid(
@@ -31,7 +33,7 @@ class Chronomètre:
         )
 
         # Bouton Démarrer le Minuteur
-        self.start_button_minuteur = tk.Button(root, text="Démarrer", command=self.start_minuteur)
+        self.start_button_minuteur = tk.Button(root, text="Démarrer", command=self.start_minuteur, width=25)
 
         # Bouton Arrêter le Chronomètre
         self.stop_button_temps = tk.Button(root, text="Arrêter", command=self.stop_temps, width=25)
@@ -154,7 +156,6 @@ class Chronomètre:
             row=1,
             column=0
         )
-
         self.label_minutes.grid(
             row=0,
             column=1
@@ -218,6 +219,8 @@ class Chronomètre:
         Décompte les secondes et met à jour les champs.
         """
         if total_seconds > 0 and self.running:
+                # print(total_seconds)
+                self.changer_affichage(total_seconds)
                 # Calculer les heures, minutes, secondes restantes
                 heures, reste = divmod(total_seconds, 3600)
                 minutes, secondes = divmod(reste, 60)
@@ -228,14 +231,38 @@ class Chronomètre:
                 self.seconde_nb.set(f"{secondes:02}")
 
                 # Appeler à nouveau la fonction après 1 seconde
-                self.écran_minuteur.after(1000, self.décompte, total_seconds - 1)
+                self.label_minuteur_en_cours.after(1000, self.décompte, total_seconds - 1)
         elif total_seconds == 0 and self.running:
             self.running = False
+            self.changer_affichage()
             # Quand le décompte est terminé
             self.heure_nb.set("00")
             self.minute_nb.set("00")
             self.seconde_nb.set("00")
             print("Minuteur terminé !")
+
+    def changer_affichage(self,secondes ="0"):
+        """
+        Changer l'affichage d'un input vers un label.
+        """
+        if self.running:
+            self.écran_minuteur.grid_forget()
+            self.label_minuteur_en_cours.grid(
+                row=0,
+                column=0,
+                columnspan=3,
+                pady=20
+            )
+            self.label_minuteur_en_cours.config(text=secondes)
+        else:
+            self.écran_minuteur.grid(
+                row=0,
+                column=0,
+                columnspan=3,
+                pady=20
+            )
+            self.label_minuteur_en_cours.config(text="0")
+            self.label_minuteur_en_cours.grid_forget()
 
     """
     Fonctions spécifiques au chronomètres
@@ -294,7 +321,7 @@ class Chronomètre:
         root.quit()
 
     # Pour toujours afficher les heures:minutes:secondes
-    def format_time(self, seconds):
+    def format_time_chronomètre(self, seconds):
         hrs = seconds // 3600
         mins = (seconds % 3600) // 60
         secs = seconds % 60
@@ -303,7 +330,7 @@ class Chronomètre:
     def update_temps(self):
         if self.running:
             self.temps_écoulé += 1
-            temps_affiché = self.format_time(self.temps_écoulé)
+            temps_affiché = self.format_time_chronomètre(self.temps_écoulé)
             self.label_temps.config(text=temps_affiché)
             # Après toutes les 1000 millisecondes (secondes), on relance la même fonction 
             self.root.after(1000, self.update_temps)

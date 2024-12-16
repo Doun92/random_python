@@ -21,7 +21,6 @@ class Chronomètre:
                 columnspan=3,
                 pady=20
             )
-
         self.label_minuteur_en_cours = tk.Label(root, text="", font=("Arial", 40))
 
         # Bouton Démarrer le Chronomètre
@@ -43,7 +42,6 @@ class Chronomètre:
             pady=5
         )
 
-
         # Bouton Reset le Chronomètre
         self.reset_button_chronomètre = tk.Button(root, text="Remettre à zéro", command=self.reset_chronomètre, width=25)
         self.reset_button_chronomètre.grid(
@@ -51,6 +49,10 @@ class Chronomètre:
             column=1,
             pady=5
         )
+
+        # Bouton modifier Minuteur
+        self.modifier_button_minuteur = tk.Button(root, text="Modifier le minuteur", command=self.modifier_minuteur, width=25)
+
 
         # Bouton Switch Minuteur
         self.switch_to_minuteur_button = tk.Button(root, text="Aller vers le Minuteur", command=self.switch_to_minuteur, width=25)
@@ -177,21 +179,29 @@ class Chronomètre:
             column=1,
             pady=5
         )
-        self.stop_button_temps.grid(
+        self.modifier_button_minuteur.grid(
             row=2,
             column=1,
             pady=5
         )
-        self.switch_to_chronomètre_button.grid(
+        self.stop_button_temps.grid(
             row=3,
             column=1,
             pady=5
         )
-        self.close_app_button.grid(
+        self.switch_to_chronomètre_button.grid(
             row=4,
             column=1,
             pady=5
         )
+        self.close_app_button.grid(
+            row=5,
+            column=1,
+            pady=5
+        )
+        self.heure_nb.set("00")
+        self.minute_nb.set("00")
+        self.seconde_nb.set("00")
 
     def start_minuteur(self):
         """
@@ -264,6 +274,16 @@ class Chronomètre:
             self.label_minuteur_en_cours.config(text="0")
             self.label_minuteur_en_cours.grid_forget()
 
+    def modifier_minuteur(self):
+        self.running = False
+        self.écran_minuteur.grid(
+            row=0,
+            column=0,
+            columnspan=3,
+            pady=20
+        )
+        self.label_minuteur_en_cours.grid_forget()
+
     """
     Fonctions spécifiques au chronomètres
     """
@@ -274,6 +294,8 @@ class Chronomètre:
         self.close_app_button.grid_forget()
         self.écran_minuteur.grid_forget()
         self.start_button_minuteur.grid_forget()
+        self.label_minuteur_en_cours.grid_forget()
+        self.modifier_button_minuteur.grid_forget()
         self.label_temps.grid(
                 row=0,
                 column=0,

@@ -263,7 +263,7 @@ class Chronomètre:
                 columnspan=3,
                 pady=20
             )
-            self.label_minuteur_en_cours.config(text=secondes)
+            self.label_minuteur_en_cours.config(text=self.format_time_chronomètre(secondes))
         else:
             self.écran_minuteur.grid(
                 row=0,
@@ -339,16 +339,6 @@ class Chronomètre:
         self.temps_écoulé = 0
         self.label_temps.config(text="00:00:00")
 
-    def close_app(self):
-        root.quit()
-
-    # Pour toujours afficher les heures:minutes:secondes
-    def format_time_chronomètre(self, seconds):
-        hrs = seconds // 3600
-        mins = (seconds % 3600) // 60
-        secs = seconds % 60
-        return f"{hrs:02}:{mins:02}:{secs:02}"
-
     def update_temps(self):
         if self.running:
             self.temps_écoulé += 1
@@ -360,9 +350,18 @@ class Chronomètre:
     """
     Fonctions pour les deux
     """
+    # Pour toujours afficher les heures:minutes:secondes
+    def format_time_chronomètre(self, seconds):
+        hrs = seconds // 3600
+        mins = (seconds % 3600) // 60
+        secs = seconds % 60
+        return f"{hrs:02}:{mins:02}:{secs:02}"
+    
     def stop_temps(self):
         self.running = False
 
+    def close_app(self):
+        root.quit()
 # Lancement de l'application
 if __name__ == "__main__":
     root = tk.Tk()

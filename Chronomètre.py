@@ -1,4 +1,5 @@
 import tkinter as tk
+from pygame import mixer
 
 class Chronomètre:
     def __init__(self, root):
@@ -53,7 +54,6 @@ class Chronomètre:
         # Bouton modifier Minuteur
         self.modifier_button_minuteur = tk.Button(root, text="Modifier le minuteur", command=self.modifier_minuteur, width=25)
 
-
         # Bouton Switch Minuteur
         self.switch_to_minuteur_button = tk.Button(root, text="Aller vers le Minuteur", command=self.switch_to_minuteur, width=25)
         self.switch_to_minuteur_button.grid(
@@ -74,6 +74,13 @@ class Chronomètre:
         self.seconde_nb.set("00")
 
         self.écran_minuteur = tk.Frame(root)
+        
+        # Pop up window pour arrêter la musique
+        self.pop_up_window_stop_music = tk.Frame(root)
+        # Bouton arrêter musique
+        self.arrêter_musique_bouton = tk.Button(self.pop_up_window_stop_music, text="Arrêter la musique", command=self.stop_music, width=25)
+
+
          # Configurer la validation pour les champs Entry
         validate_cmd = root.register(self.valider_entrée_minuteur)
         # Heures
@@ -250,6 +257,7 @@ class Chronomètre:
             self.minute_nb.set("00")
             self.seconde_nb.set("00")
             print("Minuteur terminé !")
+            self.play_music()
 
     def changer_affichage(self,secondes ="0"):
         """
@@ -283,6 +291,25 @@ class Chronomètre:
             pady=20
         )
         self.label_minuteur_en_cours.grid_forget()
+
+    def play_music(self):
+        mixer.init()
+        mixer.music.load("Gymnopédie No.1 - Erik Satie.mp3")
+        mixer.music.play(loops=0)
+        self.pop_up_window_stop_music.grid(
+            row=1,
+            column=0,
+            pady=20
+        )
+        self.arrêter_musique_bouton.grid(
+            row=0,
+            column=0,
+            pady=20
+        )
+
+    def stop_music(self):
+        mixer.music.stop()
+        self.pop_up_window_stop_music.grid_forget()
 
     """
     Fonctions spécifiques au chronomètres

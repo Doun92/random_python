@@ -32,7 +32,7 @@ class Chronomètre:
         self.reset_button_chronomètre = tk.Button(root, text="Remettre à zéro", command=self.reset_chronomètre, width=25)
         
         # Bouton Switch to pro
-        # self.switch_to_pro_button = tk.Button(root, text="Fonctionnalités avancées", command=)
+        self.switch_to_pro_button = tk.Button(root, text="Fonctionnalités avancées", command=self.switch_to_pro, width=25)
 
         # Bouton enregistrer temps
         self.save_time_button = tk.Button(root, text="Enregistrer temps", command=self.save_time, width=25)
@@ -354,7 +354,15 @@ class Chronomètre:
             else:
                 # Après toutes les 1000 millisecondes (secondes), on relance la même fonction 
                 self.root.after(1000, self.update_temps)
-            
+
+    def switch_to_pro(self):
+        self.reset_chronomètre()
+        if self.version_pro == False:
+            self.version_pro = True
+            self.set_buttons("Chronomètre")
+        else:
+            self.version_pro = False
+            self.set_buttons("Chronomètre")
 
     def save_time(self):
         print(self.temps_écoulé)
@@ -375,7 +383,7 @@ class Chronomètre:
                 column=1,
                 pady=5
             )
-            self.save_time_button.grid(
+            self.switch_to_pro_button.grid(
                 row=2,
                 column=1,
                 pady=5
@@ -427,13 +435,18 @@ class Chronomètre:
                 column=1,
                 pady=5
             )
-            self.switch_to_minuteur_button.grid(
+            self.switch_to_pro_button.grid(
                 row=5,
                 column=1,
                 pady=5
             )
-            self.close_app_button.grid(
+            self.switch_to_minuteur_button.grid(
                 row=6,
+                column=1,
+                pady=5
+            )
+            self.close_app_button.grid(
+                row=7,
                 column=1,
                 pady=5
             )

@@ -15,61 +15,33 @@ class Chronomètre:
         # Interface graphique
 
         # Affichage du temps
-        if self.tool == "Chronomètre":
-            self.label_temps = tk.Label(root, text="00:00:00", font=("Arial", 40))
-            self.label_temps.grid(
-                row=0,
-                column=0,
-                columnspan=3,
-                pady=20
-            )
+        self.label_temps = tk.Label(root, text="00:00:00", font=("Arial", 40))
+        
         self.label_minuteur_en_cours = tk.Label(root, text="", font=("Arial", 40))
 
         # Bouton Démarrer le Chronomètre
         self.start_button_chronomètre = tk.Button(root, text="Démarrer", command=self.start_chronomètre, width=25)
-        self.start_button_chronomètre.grid(
-            row=1,
-            column=1,
-            pady=5
-        )
-
+    
         # Bouton Démarrer le Minuteur
         self.start_button_minuteur = tk.Button(root, text="Démarrer", command=self.start_minuteur, width=25)
 
         # Bouton Arrêter le Chronomètre
         self.stop_button_temps = tk.Button(root, text="Arrêter", command=self.stop_temps, width=25)
-        self.stop_button_temps.grid(
-            row=3,
-            column=1,
-            pady=5
-        )
 
         # Bouton Reset le Chronomètre
         self.reset_button_chronomètre = tk.Button(root, text="Remettre à zéro", command=self.reset_chronomètre, width=25)
-        self.reset_button_chronomètre.grid(
-            row=4,
-            column=1,
-            pady=5
-        )
+        
+        # Bouton Switch to pro
+        # self.switch_to_pro_button = tk.Button(root, text="Fonctionnalités avancées", command=)
 
         # Bouton enregistrer temps
         self.save_time_button = tk.Button(root, text="Enregistrer temps", command=self.save_time, width=25)
-        self.save_time_button.grid(
-            row=2,
-            column=1,
-            pady=5
-        )
 
         # Bouton modifier Minuteur
         self.modifier_button_minuteur = tk.Button(root, text="Modifier le minuteur", command=self.modifier_minuteur, width=25)
 
         # Bouton Switch Minuteur
         self.switch_to_minuteur_button = tk.Button(root, text="Aller vers le Minuteur", command=self.switch_to_minuteur, width=25)
-        self.switch_to_minuteur_button.grid(
-            row=5,
-            column=1,
-            pady=5
-        )
 
         # Écran minuteur
         # Declaration of variables
@@ -88,7 +60,6 @@ class Chronomètre:
         self.pop_up_window_stop_music = tk.Frame()
         # Bouton arrêter musique
         self.arrêter_musique_bouton = tk.Button(self.pop_up_window_stop_music, text="Arrêter la musique", command=self.stop_music, width=25)
-
 
          # Configurer la validation pour les champs Entry
         validate_cmd = root.register(self.valider_entrée_minuteur)
@@ -128,12 +99,9 @@ class Chronomètre:
 
         # Bouton Fermer l'application
         self.close_app_button = tk.Button(root, text="Fermer l'application", command=self.close_app, width=25)
-        self.close_app_button.grid(
-            row=6,
-            column=1,
-            pady=5
-        )
 
+        # On lance l'interface
+        self.set_buttons("Chronomètre")
     """
     Fonctions spécifiques au minuteur
     """
@@ -394,6 +362,84 @@ class Chronomètre:
     """
     Fonctions pour les deux
     """
+    def set_buttons(self, app_version):
+        if app_version == "Chronomètre" and self.version_pro == False:
+            self.label_temps.grid(
+                row=0,
+                column=0,
+                columnspan=3,
+                pady=20
+            )
+            self.start_button_chronomètre.grid(
+                row=1,
+                column=1,
+                pady=5
+            )
+            self.save_time_button.grid(
+                row=2,
+                column=1,
+                pady=5
+            )
+            self.stop_button_temps.grid(
+                row=3,
+                column=1,
+                pady=5
+            )
+            self.reset_button_chronomètre.grid(
+                row=4,
+                column=1,
+                pady=5
+            )
+            self.switch_to_minuteur_button.grid(
+                row=5,
+                column=1,
+                pady=5
+            )
+            self.close_app_button.grid(
+                row=6,
+                column=1,
+                pady=5
+            )
+        elif app_version == "Chronomètre" and self.version_pro == True:
+            self.label_temps.grid(
+                row=0,
+                column=0,
+                columnspan=3,
+                pady=20
+            )
+            self.start_button_chronomètre.grid(
+                row=1,
+                column=1,
+                pady=5
+            )
+            self.save_time_button.grid(
+                row=2,
+                column=1,
+                pady=5
+            )
+            self.stop_button_temps.grid(
+                row=3,
+                column=1,
+                pady=5
+            )
+            self.reset_button_chronomètre.grid(
+                row=4,
+                column=1,
+                pady=5
+            )
+            self.switch_to_minuteur_button.grid(
+                row=5,
+                column=1,
+                pady=5
+            )
+            self.close_app_button.grid(
+                row=6,
+                column=1,
+                pady=5
+            )
+
+
+
     # Pour toujours afficher les heures:minutes:secondes
     def format_time_chronomètre(self, seconds):
         if self.version_pro:

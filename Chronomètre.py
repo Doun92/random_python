@@ -24,6 +24,9 @@ class Chronomètre:
         
         self.label_minuteur_en_cours = tk.Label(root, text="", font=("Arial", 40))
 
+        # Affichage des temps sauvegardés
+        self.saved_times = tk.Frame(root)
+
         # Bouton Démarrer le Chronomètre
         self.start_button_chronomètre = tk.Button(root, text="Démarrer", command=self.start_chronomètre, width=50)
     
@@ -347,7 +350,10 @@ class Chronomètre:
             self.switch_to_pro_button.config(text="Fonctionnalités avancées")
 
     def save_time(self):
-        print(self.format_time_chronomètre(self.temps_écoulé))
+        this_time = self.format_time_chronomètre(self.temps_écoulé)
+        print(this_time)
+        label = tk.Label(self.saved_times, text= this_time)
+        label.pack()
 
     """
     Fonctions pour les deux
@@ -355,6 +361,7 @@ class Chronomètre:
     def set_buttons(self, app_version):
         if app_version == "Chronomètre" and self.version_pro == False:
             self.save_time_button.grid_forget()
+            self.saved_times.grid_forget()
             self.label_temps.grid(
                 row=0,
                 column=0,
@@ -433,7 +440,13 @@ class Chronomètre:
                 column=1,
                 pady=5
             )
-
+            self.saved_times.grid(
+                row=1,
+                rowspan=10,
+                column=2,
+                pady=5,
+                sticky="nsew"
+            )
     # Pour toujours afficher les heures:minutes:secondes
     def format_time_chronomètre(self, seconds):
         if self.version_pro:

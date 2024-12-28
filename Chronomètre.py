@@ -3,8 +3,7 @@ from pygame import mixer
 
 """
 TODO
-Régler le problème de changement entre la version avancée et la version non avancée.
-Cela entre dans l'optimisation de code.
+Régler problème de changement entre minuteur et chronomètre
 """
 
 class Chronomètre:
@@ -373,16 +372,19 @@ class Chronomètre:
             self.switch_to_pro_button.config(text="Retour vers les fonctionnalités de base")
         else:
             self.version_pro = False
+            self.label_temps.config(text="00:00:00")
             self.set_buttons("Chronomètre")
+            self.switch_to_pro_button.config(text="Fonctionnalités avancées")
 
     def save_time(self):
-        print(self.temps_écoulé)
+        print(self.format_time_chronomètre(self.temps_écoulé))
 
     """
     Fonctions pour les deux
     """
     def set_buttons(self, app_version):
         if app_version == "Chronomètre" and self.version_pro == False:
+            self.save_time_button.grid_forget()
             self.label_temps.grid(
                 row=0,
                 column=0,
@@ -461,8 +463,6 @@ class Chronomètre:
                 column=1,
                 pady=5
             )
-
-
 
     # Pour toujours afficher les heures:minutes:secondes
     def format_time_chronomètre(self, seconds):

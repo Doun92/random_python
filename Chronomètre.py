@@ -1,6 +1,12 @@
 import tkinter as tk
 from pygame import mixer
 
+"""
+TODO
+Régler le problème de changement entre la version avancée et la version non avancée.
+Cela entre dans l'optimisation de code.
+"""
+
 class Chronomètre:
     def __init__(self, root):
         self.root = root
@@ -342,7 +348,10 @@ class Chronomètre:
     def reset_chronomètre(self):
         self.running = False
         self.temps_écoulé = 0
-        self.label_temps.config(text="00:00:00")
+        if self.version_pro:
+            self.label_temps.config(text="00:00:00.000")
+        else:
+            self.label_temps.config(text="00:00:00")
 
     def update_temps(self):
         if self.running:
@@ -360,6 +369,7 @@ class Chronomètre:
         if self.version_pro == False:
             self.version_pro = True
             self.set_buttons("Chronomètre")
+            self.label_temps.config(text="00:00:00.000")
         else:
             self.version_pro = False
             self.set_buttons("Chronomètre")

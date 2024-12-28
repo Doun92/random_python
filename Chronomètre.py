@@ -4,6 +4,7 @@ from pygame import mixer
 """
 TODO
 Nouvel écran pour afficher les scores
+Laisse plus d'espace
 """
 
 class Chronomètre:
@@ -26,6 +27,11 @@ class Chronomètre:
 
         # Affichage des temps sauvegardés
         self.saved_times = tk.Frame(root)
+        self.saved_times_Scrollbar = tk.Scrollbar(self.saved_times, orient='vertical')
+        self.saved_times_Scrollbar.pack(side = "right", fill = "y")
+        self.saved_times_text = tk.Text(self.saved_times, width = 15, height = 15, wrap = "none",
+                 yscrollcommand = self.saved_times_Scrollbar.set)
+        self.saved_times_Scrollbar.config(command=self.saved_times_text.yview)
 
         # Bouton Démarrer le Chronomètre
         self.start_button_chronomètre = tk.Button(root, text="Démarrer", command=self.start_chronomètre, width=50)
@@ -352,8 +358,8 @@ class Chronomètre:
     def save_time(self):
         this_time = self.format_time_chronomètre(self.temps_écoulé)
         print(this_time)
-        label = tk.Label(self.saved_times, text= this_time)
-        label.pack()
+        # label = tk.Label(self.saved_times, text= this_time)
+        self.saved_times_text.insert("end", f"{this_time}\n")
 
     """
     Fonctions pour les deux
@@ -447,6 +453,7 @@ class Chronomètre:
                 pady=5,
                 sticky="nsew"
             )
+            self.saved_times_text.pack()
     # Pour toujours afficher les heures:minutes:secondes
     def format_time_chronomètre(self, seconds):
         if self.version_pro:

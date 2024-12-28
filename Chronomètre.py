@@ -3,7 +3,7 @@ from pygame import mixer
 
 """
 TODO
-Régler problème de changement entre minuteur et chronomètre
+Nouvel écran pour afficher les scores
 """
 
 class Chronomètre:
@@ -301,43 +301,13 @@ class Chronomètre:
         self.running = False
         self.temps_écoulé = 0
         self.label_temps.config(text="00:00:00")
+        self.version_pro = False
         self.close_app_button.grid_forget()
         self.écran_minuteur.grid_forget()
         self.start_button_minuteur.grid_forget()
         self.label_minuteur_en_cours.grid_forget()
         self.modifier_button_minuteur.grid_forget()
-        self.label_temps.grid(
-                row=0,
-                column=0,
-                columnspan=3,
-                pady=20
-            )
-        self.start_button_chronomètre.grid(
-            row=1,
-            column=1,
-            pady=5
-        )
-        self.stop_button_temps.grid(
-            row=2,
-            column=1,
-            pady=5
-        )
-        self.reset_button_chronomètre.grid(
-            row=3,
-            column=1,
-            pady=5
-        )
-        self.switch_to_minuteur_button.grid(
-            row=4,
-            column=1,
-            pady=5
-        )
-        self.switch_to_chronomètre_button.grid_forget()
-        self.close_app_button.grid(
-            row=5,
-            column=1,
-            pady=5
-        )
+        self.set_buttons("Chronomètre")
 
     def start_chronomètre(self):
         if not self.running:

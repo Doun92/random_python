@@ -26,28 +26,28 @@ class Chronomètre:
         self.label_minuteur_en_cours = tk.Label(root, text="", font=("Arial", 40))
 
         # Bouton Démarrer le Chronomètre
-        self.start_button_chronomètre = tk.Button(root, text="Démarrer", command=self.start_chronomètre, width=25)
+        self.start_button_chronomètre = tk.Button(root, text="Démarrer", command=self.start_chronomètre, width=50)
     
         # Bouton Démarrer le Minuteur
-        self.start_button_minuteur = tk.Button(root, text="Démarrer", command=self.start_minuteur, width=25)
+        self.start_button_minuteur = tk.Button(root, text="Démarrer", command=self.start_minuteur, width=50)
 
         # Bouton Arrêter le Chronomètre
-        self.stop_button_temps = tk.Button(root, text="Arrêter", command=self.stop_temps, width=25)
+        self.stop_button_temps = tk.Button(root, text="Arrêter", command=self.stop_temps, width=50)
 
         # Bouton Reset le Chronomètre
-        self.reset_button_chronomètre = tk.Button(root, text="Remettre à zéro", command=self.reset_chronomètre, width=25)
+        self.reset_button_chronomètre = tk.Button(root, text="Remettre à zéro", command=self.reset_chronomètre, width=50)
         
         # Bouton Switch to pro
-        self.switch_to_pro_button = tk.Button(root, text="Fonctionnalités avancées", command=self.switch_to_pro, width=25)
+        self.switch_to_pro_button = tk.Button(root, text="Fonctionnalités avancées", command=self.switch_to_pro, width=50)
 
         # Bouton enregistrer temps
-        self.save_time_button = tk.Button(root, text="Enregistrer temps", command=self.save_time, width=25)
+        self.save_time_button = tk.Button(root, text="Enregistrer temps", command=self.save_time, width=50)
 
         # Bouton modifier Minuteur
-        self.modifier_button_minuteur = tk.Button(root, text="Modifier le minuteur", command=self.modifier_minuteur, width=25)
+        self.modifier_button_minuteur = tk.Button(root, text="Modifier le minuteur", command=self.modifier_minuteur, width=50)
 
         # Bouton Switch Minuteur
-        self.switch_to_minuteur_button = tk.Button(root, text="Aller vers le Minuteur", command=self.switch_to_minuteur, width=25)
+        self.switch_to_minuteur_button = tk.Button(root, text="Aller vers le Minuteur", command=self.switch_to_minuteur, width=50)
 
         # Écran minuteur
         # Declaration of variables
@@ -65,7 +65,7 @@ class Chronomètre:
         # Pop up window pour arrêter la musique
         self.pop_up_window_stop_music = tk.Frame()
         # Bouton arrêter musique
-        self.arrêter_musique_bouton = tk.Button(self.pop_up_window_stop_music, text="Arrêter la musique", command=self.stop_music, width=25)
+        self.arrêter_musique_bouton = tk.Button(self.pop_up_window_stop_music, text="Arrêter la musique", command=self.stop_music, width=50)
 
          # Configurer la validation pour les champs Entry
         validate_cmd = root.register(self.valider_entrée_minuteur)
@@ -101,10 +101,10 @@ class Chronomètre:
         )
 
         # Bouton Switch Chronomètre
-        self.switch_to_chronomètre_button = tk.Button(root, text="Aller vers le Chronomètre", command=self.switch_to_chronomètre, width=25)
+        self.switch_to_chronomètre_button = tk.Button(root, text="Aller vers le Chronomètre", command=self.switch_to_chronomètre, width=50)
 
         # Bouton Fermer l'application
-        self.close_app_button = tk.Button(root, text="Fermer l'application", command=self.close_app, width=25)
+        self.close_app_button = tk.Button(root, text="Fermer l'application", command=self.close_app, width=50)
 
         # On lance l'interface
         self.set_buttons("Chronomètre")
@@ -370,6 +370,7 @@ class Chronomètre:
             self.version_pro = True
             self.set_buttons("Chronomètre")
             self.label_temps.config(text="00:00:00.000")
+            self.switch_to_pro_button.config(text="Retour vers les fonctionnalités de base")
         else:
             self.version_pro = False
             self.set_buttons("Chronomètre")
